@@ -1,0 +1,26 @@
+generated: '2026-08-23'
+method: searched
+source: >-
+  https://www.jnanatx.com/ — every page in the site's 9-page corporate structure was enumerated via
+  GET /wp-json/wp/v2/pages and reviewed on 2026-08-23. There is no pricing page, no plans page, no
+  sign-up, and no commercial API offer.
+plan_count: 0
+plans: []
+summary: >-
+  Jnana Therapeutics sells no API and publishes no plans, tiers, quotas or pricing. It is a
+  drug-discovery subsidiary of Otsuka America, and its commercial motion is biopharma partnership
+  and licensing, not API consumption. The content API catalogued in this repository is a byproduct
+  of the marketing site, offered under no terms and with no commercial relationship attached.
+commercial_model: not-applicable
+free_tier: null
+enterprise_only: false
+contact_sales: false
+evidence:
+- url: https://www.jnanatx.com/wp-json/wp/v2/pages?per_page=20
+  status: 200
+  note: >-
+    Nine published pages — home, rapid-platform, programs, team, join-us, news, contact-us,
+    privacy-policy, terms-of-use. No pricing or plans page exists.
+- url: https://www.jnanatx.com/contact-us/
+  status: 200
+  note: General inquiries only (info@jnanatx.com). Not a sales or API-access gate.

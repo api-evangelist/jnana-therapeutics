@@ -1,0 +1,99 @@
+generated: '2026-08-23'
+method: derived
+source: >-
+  openapi/jnana-therapeutics-content-openapi.yml, the live route index at
+  https://www.jnanatx.com/wp-json/, and live response headers observed 2026-08-23. The site was
+  searched for compliance claims, certifications and a trust center; none is published.
+summary: >-
+  What the catalogued surface actually conforms to. Jnana Therapeutics makes no published API
+  conformance or compliance claim anywhere on www.jnanatx.com, so every entry below is an
+  observation of the contract, not a restatement of a marketing page.
+standards:
+- id: oembed-1.0
+  name: oEmbed 1.0
+  conforms: true
+  evidence: >-
+    GET /oembed/1.0/embed?url=https%3A%2F%2Fwww.jnanatx.com%2F returned 200 with
+    {"version":"1.0","provider_name":"Jnana Therapeutics","provider_url":"https://www.jnanatx.com",
+    ...}. The oembed/1.0 namespace is declared in the route index and the site advertises
+    /wp-json/oembed/1.0/embed as an alternate link on every page.
+- id: rfc8288-web-linking
+  name: RFC 8288 Web Linking
+  conforms: true
+  evidence: >-
+    Collection responses carry `Link: <...page=2>; rel="next"`; item responses carry a `_links`
+    object with self/collection/about/author/replies/wp:term relations and a `curies` block.
+- id: rfc6570-style-pagination
+  name: Page-number pagination with exposed totals
+  conforms: true
+  evidence: >-
+    page/per_page/offset parameters plus X-WP-Total and X-WP-TotalPages response headers, exposed
+    to browsers via access-control-expose-headers.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    Errors are served as application/json with the WordPress {code,message,data.status} envelope,
+    not application/problem+json. See errors/jnana-therapeutics-problem-types.yml.
+- id: rfc9116-security-txt
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: 'GET https://www.jnanatx.com/.well-known/security.txt returned 404 (nginx default body).'
+- id: rfc8594-sunset
+  name: RFC 8594 Sunset header
+  conforms: false
+  evidence: No Sunset or Deprecation header on any observed response.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme; /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource both 404. The only credential mechanism advertised is
+    WordPress Application Passwords (HTTP Basic).
+- id: oidc
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: 'GET /.well-known/openid-configuration returned 404.'
+- id: rfc8615-well-known
+  name: RFC 8615 well-known URIs
+  conforms: false
+  evidence: >-
+    Every probed /.well-known/* path returned 404. See
+    well-known/jnana-therapeutics-well-known.yml.
+- id: asyncapi
+  name: AsyncAPI / event surface
+  conforms: false
+  applicable: false
+  evidence: No webhook, streaming or event surface is published or registered in the route index.
+- id: json-api
+  name: 'JSON:API'
+  conforms: false
+  evidence: Responses are plain JSON objects, not JSON:API documents.
+- id: schema-org
+  name: schema.org structured data
+  conforms: true
+  evidence: >-
+    GET /yoast/v1/get_head?url=... returns a rendered head block containing schema.org JSON-LD, and
+    every post/term object carries a yoast_head_json field with the same graph.
+domain_standard:
+  applicable: false
+  searched:
+  - HL7 FHIR
+  - CDISC ODM / SDTM / Define-XML
+  - ICH E2B pharmacovigilance
+  - IDMP (ISO 11615/11616)
+  - CTIS / ClinicalTrials.gov data exchange
+  - GS1 / DSCSA product identifiers
+  finding: >-
+    None applies. This is a preclinical and early-clinical drug-discovery company with no product
+    API, no data-exchange surface and no regulated integration point; the only contract catalogued
+    is a website content API. Recorded as not applicable rather than as a failure — the
+    domain_standard_conformance check is reward-only and there is no standard here to invent.
+compliance:
+  certifications_published: []
+  trust_center: null
+  note: >-
+    No SOC 2, ISO 27001, HIPAA, GDPR-programme or FedRAMP claim is published on www.jnanatx.com,
+    and trust.jnanatx.com does not resolve. The privacy policy and terms of use are the only
+    governance documents the company publishes. No Compliance pointer is emitted, because there is
+    nothing published to point at.

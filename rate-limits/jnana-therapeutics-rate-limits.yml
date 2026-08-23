@@ -1,0 +1,43 @@
+generated: '2026-08-23'
+method: probed
+source: >-
+  Live response headers observed on https://www.jnanatx.com/wp-json/ 2026-08-23. The site was
+  searched for a published rate-limit or fair-use policy; none exists, and there is no developer
+  documentation of any kind.
+limit_count: 0
+summary: >-
+  No rate limit is documented and none is signalled at runtime. Jnana Therapeutics publishes no
+  developer terms for this surface, so a consumer has no stated budget and no runtime signal — the
+  only observable throttling posture is whatever the Cloudflare edge in front of WP Engine applies,
+  which is not a published contract.
+rate_limits: []
+response_headers:
+  observed: []
+  absent:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit
+  - RateLimit-Policy
+  - Retry-After
+status_on_exhaustion: unknown
+crawl_guidance:
+  robots_txt: https://www.jnanatx.com/robots.txt
+  crawl_delay: 10
+  note: >-
+    robots.txt sets `Crawl-delay: 10` for all user agents and disallows nothing. That is the only
+    published pacing signal on the domain, it is a crawler directive rather than an API rate limit,
+    and it does not count toward limit_count.
+caching_posture:
+  cache_control: 'max-age=600, must-revalidate'
+  x_cacheable: SHORT
+  cf_cache_status_observed: HIT
+  note: >-
+    Ten-minute edge caching absorbs repeat reads, which is the practical reason an unthrottled
+    anonymous surface stays available. It is not a limit.
+evidence:
+- url: https://www.jnanatx.com/wp-json/wp/v2/posts?per_page=1
+  status: 200
+  note: Full header dump contained no rate-limit header of any family.
+- url: https://www.jnanatx.com/robots.txt
+  status: 200

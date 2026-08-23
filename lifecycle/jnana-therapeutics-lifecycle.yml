@@ -1,0 +1,70 @@
+generated: '2026-08-23'
+method: derived
+source: >-
+  openapi/jnana-therapeutics-content-openapi.yml plus live probes of www.jnanatx.com on 2026-08-23.
+  Searched the site for a status page, changelog, SLA, versioning policy and deprecation policy;
+  none exists.
+summary: >-
+  Jnana Therapeutics publishes no API lifecycle commitments of any kind, because it publishes no
+  API. The content surface catalogued here is versioned only by the WordPress namespace convention
+  it inherits, and carries no announced support window.
+versioning:
+  scheme: namespace-in-path
+  current: wp/v2
+  previous: []
+  policy_published: false
+  policy_url: null
+  note: >-
+    `wp/v2` is upstream WordPress core versioning, not a Jnana commitment. A future WordPress major
+    could introduce wp/v3 without any notice from this provider.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No RFC 8594 Sunset or Deprecation header was present on any observed response, and no operation
+    in the derived OpenAPI is marked deprecated. One route that WordPress core normally registers —
+    /wp/v2/tags — is simply absent (404 rest_no_route) rather than deprecated.
+status_page:
+  published: false
+  url: null
+  note: >-
+    No status.jnanatx.com, no status page linked from the site, and no third-party status provider
+    referenced. The deployment runs on WP Engine behind Cloudflare; neither vendor status page is a
+    Jnana commitment and neither is claimed here.
+sla:
+  published: false
+  url: null
+changelog:
+  published: false
+  url: null
+  note: >-
+    The /news/ archive is corporate press-release news, not an API changelog. It is wired in
+    apis.yml as `News` and `BlogRSS`, not as ChangeLog.
+support:
+  developer_support: none
+  general_contact: info@jnanatx.com
+  contact_page: https://www.jnanatx.com/contact-us/
+  note: General corporate inquiries only. There is no developer support channel.
+corporate_lifecycle:
+  status: acquired-operating-subsidiary
+  parent: Otsuka America, Inc. (a wholly owned subsidiary of Otsuka Pharmaceutical Co., Ltd.)
+  acquisition_completed: '2024-09-23'
+  source: https://www.jnanatx.com/otsuka-pharmaceutical-completes-acquisition-of-jnana-therapeutics-inc/
+  note: >-
+    Recorded because it is the strongest available signal about the future of this surface: the
+    brand still publishes under its own domain and posted news as recently as 2026-02-24, but the
+    company is a subsidiary and the domain could be folded into the parent without notice.
+  latest_post_at_harvest: '2026-02-24'
+evidence:
+- url: https://www.jnanatx.com/wp-json/wp/v2/posts?per_page=1
+  status: 200
+  note: 'No Sunset, Deprecation or Link rel="sunset" header present.'
+- url: https://www.jnanatx.com/wp-json/wp/v2/tags?per_page=1
+  status: 404
+  note: rest_no_route — route absent, not deprecated.
+- url: https://www.jnanatx.com/.well-known/security.txt
+  status: 404

@@ -1,0 +1,68 @@
+generated: '2026-08-23'
+method: derived
+source: >-
+  Searched for a hosted or packaged MCP server on 2026-08-23 — www.jnanatx.com and its apex, the
+  npm and PyPI registries, and the GitHub organization named for the company. Nothing exists. The
+  tool list below is derived from openapi/jnana-therapeutics-content-openapi.yml and is a
+  CANDIDATE only.
+status: candidate
+summary: >-
+  Jnana Therapeutics ships no MCP server, hosted or local. No MCPServer pointer is wired in
+  apis.yml, because there is nothing an agent can reach. What follows is what a server over the
+  catalogued content surface would expose if one were built.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: >-
+    mode `none` means no server is shipped by anyone. No endpoint URL is guessed here — a guessed
+    MCP path that happened to answer 200 would read as a verified agent surface, which is the worst
+    possible artifact.
+search_evidence:
+- url: https://www.jnanatx.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://www.jnanatx.com/.well-known/agent-card.json
+  status: 404
+- url: https://registry.npmjs.org/jnana
+  status: 404
+- url: https://pypi.org/pypi/jnana/json
+  status: 404
+- url: https://api.github.com/orgs/jnana-therapeutics
+  status: 200
+  note: Organization exists but holds zero public repositories.
+candidate_tools:
+- name: list_news
+  rest: [listPosts]
+  description: List Jnana Therapeutics press releases, coverage, presentations and insights.
+- name: get_news_item
+  rest: [getPost]
+  description: Fetch one news item by id.
+- name: search_site
+  rest: [searchContent]
+  description: Search published Jnana content across posts, pages and team profiles.
+- name: list_pages
+  rest: [listPages]
+  description: List the corporate pages, including the RAPID platform and Programs pages.
+- name: get_page
+  rest: [getPage]
+  description: Fetch one corporate page by id.
+- name: list_team
+  rest: [listTeamMembers]
+  description: List leadership, board and scientific adviser profiles.
+- name: get_team_member
+  rest: [getTeamMember]
+  description: Fetch one team profile by id.
+- name: list_categories
+  rest: [listCategories]
+  description: List the news categories used to filter the archive.
+- name: list_media
+  rest: [listMedia]
+  description: List media library attachments.
+notes:
+- Every candidate tool is read-only; the underlying surface offers no write method anonymously.
+- >-
+  A tool crosswalk is not emitted, because there is no MCP server and no GraphQL surface to bind
+  the REST operations to. Emitting one would document a mapping that exists nowhere.

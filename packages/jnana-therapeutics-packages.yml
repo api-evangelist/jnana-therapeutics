@@ -1,0 +1,32 @@
+generated: '2026-08-23'
+method: searched
+source: >-
+  Registry lookups against registry.npmjs.org and pypi.org, plus a GitHub organization lookup, on
+  2026-08-23. The provider's site was enumerated for SDK, client-library or download links; there
+  are none.
+package_count: 0
+packages: []
+summary: >-
+  Jnana Therapeutics ships no client libraries. It publishes no SDK, no CLI and no code of any
+  kind, which is expected for a drug-discovery company with no developer program. No SDKs pointer
+  is emitted in apis.yml, because there is no first-party library to count.
+registries_checked:
+- registry: npm
+  queries: [jnana, jnanatx]
+  result: not-found
+  status: 404
+- registry: pypi
+  queries: [jnana, jnanatx]
+  result: not-found
+  status: 404
+source_control:
+  github_org_probed: https://github.com/Jnana-Therapeutics
+  api_status: 200
+  public_repos: 0
+  created_at: '2022-11-16'
+  official: unconfirmed
+  note: >-
+    A GitHub organization named "Jnana Therapeutics" exists and resolves, but it holds zero public
+    repositories, declares no blog or email, and is not linked from anywhere on www.jnanatx.com.
+    First-party ownership therefore cannot be established from the provider's own surface, so no
+    GitHubOrganization pointer is emitted in apis.yml. Recorded here as a lead, not as a claim.

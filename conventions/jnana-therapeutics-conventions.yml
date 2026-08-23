@@ -1,0 +1,151 @@
+generated: '2026-08-23'
+method: derived
+source: >-
+  openapi/jnana-therapeutics-content-openapi.yml plus live response headers observed on
+  https://www.jnanatx.com/wp-json/ on 2026-08-23. Upstream contract semantics documented at
+  https://developer.wordpress.org/rest-api/
+summary: >-
+  Cross-cutting runtime semantics of the anonymously readable WordPress REST content API behind
+  www.jnanatx.com. Jnana Therapeutics publishes none of this itself — every value below was read
+  off a live response or the published route index.
+auth_style:
+  model: anonymous-read
+  detail: >-
+    No credential is required or accepted for the read surface. See
+    authentication/jnana-therapeutics-authentication.yml.
+pagination:
+  style: page-number
+  params:
+    page: 'Page number, 1-based. Default 1.'
+    per_page: 'Items per page, 1..100. Default 10.'
+    offset: 'Absolute offset, available on the post-type collections.'
+  response_fields: []
+  response_headers:
+    X-WP-Total: Total items in the collection.
+    X-WP-TotalPages: Total pages at the current per_page.
+    Link: 'RFC 8288 link header carrying rel="next" and rel="prev".'
+  exposed_via_cors: true
+  note: >-
+    `access-control-expose-headers: X-WP-Total, X-WP-TotalPages, Link` — the pagination signal is
+    readable from a browser client.
+filtering:
+  ordering:
+    params: [order, orderby]
+    values: 'order asc|desc (default desc); orderby varies by collection — date, id, title, slug, relevance, modified, include, author, parent.'
+  date_windows: [after, before, modified_after, modified_before]
+  identity: [include, exclude, slug, offset]
+  taxonomy: [categories, categories_exclude, team-department, team-department_exclude, tax_relation]
+  search:
+    params: [search, search_columns, search_semantics]
+    note: '`search_semantics=exact` is offered on the post-type collections.'
+sparse_fields:
+  supported: true
+  param: _fields
+  detail: >-
+    `?_fields=id,slug,title` trims the response to the named top-level fields. Verified live on
+    /wp/v2/pages and /wp/v2/posts.
+field_expansion:
+  supported: true
+  param: _embed
+  detail: >-
+    `?_embed` inlines the objects named in `_links` (author, featured media, terms) under
+    `_embedded`, which is the standard WordPress substitute for a join.
+  hypermedia: >-
+    Every resource carries a `_links` object of link relations (self, collection, about, author,
+    wp:featuredmedia, wp:term, curies) — the surface is HAL-ish rather than flat.
+error_envelope:
+  shape: wordpress-rest
+  media_type: application/json
+  fields:
+    code: Machine-readable slug, e.g. rest_no_route, rest_forbidden, rest_invalid_param.
+    message: Human-readable sentence.
+    data.status: The HTTP status, repeated inside the body.
+  rfc9457: false
+  note: >-
+    Not application/problem+json and not RFC 9457. See errors/jnana-therapeutics-problem-types.yml.
+versioning:
+  scheme: namespace-in-path
+  current: wp/v2
+  namespaces_served:
+  - oembed/1.0
+  - wpe/cache-plugin/v1
+  - wpe_sign_on_plugin/v1
+  - contact-form-7/v1
+  - yoast/v1
+  - genesis-custom-blocks
+  - genesis/v1
+  - wp/v2
+  - wp-site-health/v1
+  - wp-block-editor/v1
+  - wp-abilities/v1
+  discovery: 'GET /wp-json/ returns the full route index; ?namespace=wp/v2 filters it.'
+  provider_policy: none-published
+rate_limit_signaling:
+  headers_observed: []
+  status_on_exhaustion: unknown
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was present on any observed response. See
+    rate-limits/jnana-therapeutics-rate-limits.yml.
+caching:
+  cache_control: 'max-age=600, must-revalidate'
+  last_modified: present
+  etag: absent
+  vary: 'Accept-Encoding, Cookie'
+  edge: 'Cloudflare in front of WP Engine (x-powered-by: WP Engine, cf-cache-status observed HIT).'
+  x_cacheable: SHORT
+request_id_tracing:
+  supported: partial
+  header: cf-ray
+  note: >-
+    No first-party request id. Cloudflare's `cf-ray` is the only correlatable identifier on a
+    response, and it is an edge artifact, not a provider contract.
+idempotency:
+  supported: na
+  reason: >-
+    The anonymous surface is read-only — an OPTIONS preflight on /wp/v2/posts returns `allow: GET`,
+    and every write route answers 401/403 without credentials. There is no unsafe method to make
+    idempotent.
+dry_run_mode:
+  supported: na
+  reason: No write surface.
+reversibility:
+  applicable: false
+  grade: na
+  reason: >-
+    Read-only API. No operation in openapi/jnana-therapeutics-content-openapi.yml mutates state, so
+    there is nothing to cancel, refund, void, reverse, undo, roll back or restore. Recorded as `na`
+    rather than zero.
+  write_surfaces: []
+  reversal_operations: []
+  evidence:
+  - url: https://www.jnanatx.com/wp-json/wp/v2/posts
+    method: OPTIONS
+    status: 200
+    observed: 'allow: GET'
+observations:
+- id: users-collection-anonymous
+  severity: informational
+  detail: >-
+    /wp/v2/users is anonymously readable and returns 4 author records including WordPress account
+    display names and slugs, which are also usable as login enumeration input. This is WordPress
+    default behaviour rather than a Jnana decision, and it is recorded here because it is served,
+    not because it is documented. No account identifiers are reproduced in this repository.
+  remedy: >-
+    If the author collection is not needed by the front end, disable the wp/v2/users route for
+    unauthenticated callers.
+- id: noindex-on-api
+  severity: informational
+  detail: >-
+    Every REST response carries `x-robots-tag: noindex`, so the surface is served but deliberately
+    not indexed.
+- id: post-tag-not-exposed
+  severity: informational
+  detail: >-
+    The core `post_tag` taxonomy is not registered on the REST surface — /wp/v2/tags returns 404
+    rest_no_route. Only `category` and the custom `team-department` taxonomy are reachable.
+cross_links:
+  errors: errors/jnana-therapeutics-problem-types.yml
+  lifecycle: lifecycle/jnana-therapeutics-lifecycle.yml
+  authentication: authentication/jnana-therapeutics-authentication.yml
+  rate_limits: rate-limits/jnana-therapeutics-rate-limits.yml
+  data_model: data-model/jnana-therapeutics-data-model.yml

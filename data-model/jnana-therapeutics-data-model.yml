@@ -1,0 +1,140 @@
+generated: '2026-08-23'
+method: derived
+source: >-
+  Derived from the $ref graph and id-reference fields in
+  openapi/jnana-therapeutics-content-openapi.yml, cross-checked against live objects and
+  `_links`/`_embedded` relations observed on https://www.jnanatx.com/wp-json/ on 2026-08-23.
+summary: >-
+  The content graph behind www.jnanatx.com. Nine entities, all read-only. Identifiers are plain
+  integers with no type prefix, so an id is only meaningful together with its collection.
+id_scheme:
+  type: integer
+  prefixed: false
+  note: >-
+    Post ids on this deployment span two ranges — small legacy ids (7, 14, 134) for the original
+    2022 pages and team profiles, and 10-digit ids (5536957087) for content created after the site
+    was migrated. Both are opaque; do not infer ordering from them.
+entities:
+- name: Post
+  collection: /wp/v2/posts
+  count_at_harvest: 62
+  key: id
+  description: News archive item — press release, in-the-news coverage, presentation or insight.
+- name: Page
+  collection: /wp/v2/pages
+  count_at_harvest: 9
+  key: id
+  description: Corporate page.
+- name: MediaItem
+  collection: /wp/v2/media
+  count_at_harvest: 376
+  key: id
+  description: Attachment in the media library.
+- name: TeamMember
+  collection: /wp/v2/team
+  count_at_harvest: 9
+  key: id
+  description: '`team` custom post type — leadership, board and scientific adviser profiles.'
+- name: Term
+  collection: /wp/v2/categories, /wp/v2/team-department
+  count_at_harvest: 11
+  key: id
+  description: Taxonomy term. Seven post categories and four team departments.
+- name: User
+  collection: /wp/v2/users
+  count_at_harvest: 4
+  key: id
+  description: Author record.
+- name: Comment
+  collection: /wp/v2/comments
+  count_at_harvest: 0
+  key: id
+  description: Comment. Registered and reachable but empty on this deployment.
+- name: PostType
+  collection: /wp/v2/types
+  count_at_harvest: 12
+  key: slug
+  description: Registered post type descriptor.
+- name: SearchResult
+  collection: /wp/v2/search
+  count_at_harvest: 73
+  key: id
+  description: Projection of a published object into a search hit.
+relationships:
+- from: Post
+  to: User
+  type: belongs_to
+  via: author
+  link_rel: author
+- from: Post
+  to: MediaItem
+  type: belongs_to
+  via: featured_media
+  link_rel: 'wp:featuredmedia'
+- from: Post
+  to: Term
+  type: has_many
+  via: categories
+  link_rel: 'wp:term'
+  note: Category terms only; post_tag is not exposed on this deployment.
+- from: Post
+  to: Comment
+  type: has_many
+  via: _links.replies
+  link_rel: replies
+  note: Always empty here.
+- from: Page
+  to: User
+  type: belongs_to
+  via: author
+- from: Page
+  to: Page
+  type: belongs_to
+  via: parent
+  note: Self-referential hierarchy. All 9 pages are top-level (parent 0) at harvest time.
+- from: Page
+  to: MediaItem
+  type: belongs_to
+  via: featured_media
+- from: MediaItem
+  to: Post
+  type: belongs_to
+  via: post
+  note: The object the attachment is attached to; may be a Post, Page or TeamMember.
+- from: MediaItem
+  to: User
+  type: belongs_to
+  via: author
+- from: TeamMember
+  to: Term
+  type: has_many
+  via: team-department
+  link_rel: 'wp:term'
+- from: TeamMember
+  to: MediaItem
+  type: belongs_to
+  via: featured_media
+- from: Term
+  to: Term
+  type: belongs_to
+  via: parent
+  note: Hierarchical taxonomies only; every term observed here has parent 0.
+- from: Term
+  to: Post
+  type: has_many
+  via: 'GET /wp/v2/posts?categories={id}'
+  note: Reverse traversal is a filtered query, not a field.
+- from: PostType
+  to: Term
+  type: has_many
+  via: taxonomies
+traversal:
+  embed:
+    param: _embed
+    detail: >-
+      Inlines author, featured media and terms under `_embedded`, which is how this API substitutes
+      for a join. Verified live on /wp/v2/posts — `_embedded` returned `author` and `wp:term`.
+  links:
+    field: _links
+    relations: [self, collection, about, author, replies, version-history, 'wp:attachment', 'wp:term', curies]
+render: null

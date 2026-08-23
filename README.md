@@ -64,5 +64,18 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Jnana Therapeutics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/jnana-therapeutics_stock/
+Jnana Therapeutics Inc. is a Boston-based biotechnology company built around RAPID (Reactive
+Affinity Probe Interaction Discovery), a next-generation chemoproteomics platform for discovering
+small-molecule medicines against target classes conventional screening has struggled to drug. Its
+programs focus on phenylketonuria (PKU) and immune-mediated diseases. Otsuka Pharmaceutical
+completed its acquisition of Jnana on 23 September 2024, making it a direct subsidiary of Otsuka
+America, Inc.
+
+Jnana Therapeutics runs no developer program and publishes no product API, developer portal, API
+reference or SDK — `api.jnanatx.com`, `docs.jnanatx.com` and `developer.jnanatx.com` do not resolve.
+The only machine-readable surface reachable without credentials is the read-only WordPress REST
+content API behind `www.jnanatx.com`, which is what this profile catalogues. The OpenAPI here is an
+API Evangelist derivation of the live route index, not a document Jnana publishes.
+
+- Website: https://www.jnanatx.com/
+- Secondary market: https://forgeglobal.com/jnana-therapeutics_stock/

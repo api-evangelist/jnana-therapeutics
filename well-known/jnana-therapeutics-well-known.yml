@@ -1,0 +1,72 @@
+generated: '2026-08-23'
+method: probed
+source: >-
+  Live GET probes of the /.well-known/ surface on every host in apis.yml and in
+  openapi/jnana-therapeutics-content-openapi.yml, 2026-08-23.
+summary: >-
+  Nothing is served. Every probed path returned 404 on both the www host and the apex. Recorded as
+  a measured absence — no WellKnown or SecurityTxt pointer is emitted in apis.yml, because the
+  provider serves no document at any of these paths.
+hit_count: 0
+hosts:
+- host: https://www.jnanatx.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: https://jnanatx.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+soft_404_control:
+  path: /this-path-should-not-exist-12345
+  status: 404
+  bytes: 125802
+  note: >-
+    The host is NOT a 200 catch-all — an invented path returns a genuine 404. Two shapes were
+    observed: WordPress renders a 125,802-byte themed 404 page for paths it routes, and nginx
+    returns a 548-byte default 404 for /llms.txt and /.well-known/security.txt. Both are honest
+    negatives, so the absences recorded above are real rather than an artifact of a catch-all.
+other_probes:
+- path: /llms.txt
+  host: https://www.jnanatx.com
+  status: 404
+- path: /robots.txt
+  host: https://www.jnanatx.com
+  status: 200
+  note: 'Yoast-generated. `User-agent: * / Disallow:` with Crawl-delay 10 and a sitemap reference. Not a well-known document.'
+- path: /sitemap.xml
+  host: https://www.jnanatx.com
+  status: 200
+  note: Redirects to the Yoast sitemap_index.xml. Not a well-known document.

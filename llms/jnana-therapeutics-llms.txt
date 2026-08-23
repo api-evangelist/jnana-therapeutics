@@ -1,0 +1,120 @@
+# Jnana Therapeutics
+
+> Jnana Therapeutics Inc. is a Boston-based biotechnology company that built RAPID — Reactive
+> Affinity Probe Interaction Discovery — a next-generation chemoproteomics platform for
+> discovering small-molecule medicines against target classes conventional screening has struggled
+> to drug. It has been a direct subsidiary of Otsuka America, Inc. since Otsuka Pharmaceutical
+> completed its acquisition on 23 September 2024. Jnana runs no developer program and publishes no
+> product API, developer portal, API reference or SDK.
+
+Generated: 2026-08-23
+Method: generated (Jnana Therapeutics serves no /llms.txt — https://www.jnanatx.com/llms.txt
+returned 404 on 2026-08-23). Assembled by API Evangelist from apis.yml and the artifacts in this
+repository.
+
+## What this company is
+
+- Headquarters: One Design Center Place, Suite 19-400, Boston, MA 02210. Tel (857) 349-9200.
+- General inquiries: info@jnanatx.com
+- Platform: RAPID chemoproteomics, run in living cells. A proprietary Reactive Affinity Probe (RAP)
+  library covalently labels druggable pockets on a validated target; a proprietary detection
+  technology then screens large drug-like compound libraries for binders that displace the probe.
+  Addresses SLC transporters, transcription factors, signaling scaffold proteins, phosphatases,
+  GPCRs and helicases, yielding allosteric inhibitors, localization modulators and molecular glues.
+- Programs: phenylketonuria (PKU) — JNT-517, an oral inhibitor at a cryptic allosteric site on the
+  SLC6A19 transporter, taken through Phase 1b/2 — and immune-mediated diseases, including targets
+  such as interferon regulatory factor 3 (IRF3). Collaborations include Roche.
+- Ownership: acquired by Otsuka Pharmaceutical Co., Ltd. for $800M plus up to $325M in development
+  and regulatory milestones; the acquisition completed 2024-09-23 and Jnana became a direct
+  subsidiary of Otsuka America, Inc. Otsuka initiated a global Phase 3 trial of repinatrabit in PKU
+  in December 2025.
+
+## What is machine-readable here
+
+There is exactly one anonymously reachable machine-readable surface, and it is the WordPress REST
+content API behind the marketing site. It is not a product. It is documented in this repository
+because it is served, not because Jnana offers it.
+
+- Base URL: https://www.jnanatx.com/wp-json
+- Contract: [OpenAPI 3.1 (API Evangelist derivation)](../openapi/jnana-therapeutics-content-openapi.yml)
+- Upstream contract reference: https://developer.wordpress.org/rest-api/
+- Authentication: none required for reads. See [authentication](../authentication/jnana-therapeutics-authentication.yml)
+- Read-only: an OPTIONS preflight on /wp/v2/posts returns `allow: GET`; every write and
+  administrative route answers 401/403/404 anonymously.
+
+### Collections (counts read from X-WP-Total on 2026-08-23)
+
+- `GET /wp/v2/posts` — news archive, 62 items (press releases 43, in-the-news 16, presentations 3,
+  insights 2)
+- `GET /wp/v2/pages` — 9 corporate pages
+- `GET /wp/v2/media` — 376 attachments
+- `GET /wp/v2/team` — 9 leadership, board and scientific adviser profiles (custom post type)
+- `GET /wp/v2/team-department` — 4 department terms
+- `GET /wp/v2/categories` — 7 news categories
+- `GET /wp/v2/search` — cross-content search, 73 objects indexed
+- `GET /wp/v2/users` — 4 author records
+- `GET /wp/v2/comments` — registered, empty
+- `GET /oembed/1.0/embed` — oEmbed 1.0 provider
+- `GET /yoast/v1/get_head` — Yoast SEO head metadata including schema.org JSON-LD
+- `GET /genesis/v1/reading-settings`, `GET /genesis/v1/breadcrumbs` — theme documents
+
+### How to read it well
+
+- Paginate with `page` and `per_page` (max 100); read `X-WP-Total` and `X-WP-TotalPages`, or follow
+  the `Link: rel="next"` header.
+- Trim payloads with `_fields=id,slug,title`.
+- Inline author, featured media and terms with `_embed` instead of issuing follow-up requests.
+- Filter news by category id, e.g. `?categories=5` for press releases.
+- Errors are `{"code","message","data":{"status"}}` — not RFC 9457. See
+  [error catalog](../errors/jnana-therapeutics-problem-types.yml).
+- No rate-limit header of any family is returned. robots.txt sets `Crawl-delay: 10`; honour it.
+  See [rate limits](../rate-limits/jnana-therapeutics-rate-limits.yml).
+
+## What does not exist
+
+Recorded so an agent stops looking rather than guessing:
+
+- No developer portal, documentation, API reference, getting-started guide or sign-up.
+  `api.jnanatx.com`, `docs.jnanatx.com`, `developer.jnanatx.com`, `developers.jnanatx.com`,
+  `portal.jnanatx.com`, `status.jnanatx.com`, `trust.jnanatx.com` and `security.jnanatx.com` do not
+  resolve (NXDOMAIN, 2026-08-23).
+- No OpenAPI, AsyncAPI, GraphQL SDL, Postman collection or JSON Schema published by the company.
+- No SDK, client library or CLI on npm or PyPI.
+- No MCP server, hosted or packaged. See [mcp](../mcp/jnana-therapeutics-mcp.yml).
+- No A2A agent card at `/.well-known/agent-card.json` or `/.well-known/agent.json` (404 on both
+  hosts).
+- No `/.well-known/*` document of any kind, no `/llms.txt`, no security.txt.
+- No status page, SLA, changelog, versioning policy or deprecation policy.
+- No plans, pricing, quotas or commercial API offer.
+- No published compliance certifications and no trust center.
+
+## Repository artifacts
+
+- [apis.yml](../apis.yml) — the APIs.json profile
+- [OpenAPI](../openapi/jnana-therapeutics-content-openapi.yml)
+- [Overlay](../overlays/jnana-therapeutics-content-overlay.yaml)
+- [Authentication](../authentication/jnana-therapeutics-authentication.yml)
+- [Conventions](../conventions/jnana-therapeutics-conventions.yml)
+- [Error catalog](../errors/jnana-therapeutics-problem-types.yml)
+- [Data model](../data-model/jnana-therapeutics-data-model.yml)
+- [Lifecycle](../lifecycle/jnana-therapeutics-lifecycle.yml)
+- [Conformance](../conformance/jnana-therapeutics-conformance.yml)
+- [Rate limits](../rate-limits/jnana-therapeutics-rate-limits.yml)
+- [Plans](../plans/jnana-therapeutics-plans-pricing.yml)
+- [Packages](../packages/jnana-therapeutics-packages.yml)
+- [Well-known probe](../well-known/jnana-therapeutics-well-known.yml)
+- [Domain security](../security/jnana-therapeutics-domain-security.yml)
+- [Agent skills](../skills/_index.yml)
+
+## Human links
+
+- Website: https://www.jnanatx.com/
+- RAPID platform: https://www.jnanatx.com/rapid-platform/
+- Programs: https://www.jnanatx.com/programs/
+- Team: https://www.jnanatx.com/team/
+- News: https://www.jnanatx.com/news/ (RSS: https://www.jnanatx.com/feed/)
+- Careers: https://www.jnanatx.com/join-us/
+- Contact: https://www.jnanatx.com/contact-us/
+- Privacy policy: https://www.jnanatx.com/privacy-policy/
+- Terms of use: https://www.jnanatx.com/terms-of-use/
+- Parent company: https://www.otsuka.co.jp/en/

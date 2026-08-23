@@ -1,23 +1,165 @@
 aid: jnana-therapeutics
 name: Jnana Therapeutics
-description: 'Jnana Therapeutics is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Jnana Therapeutics Inc. is a biotechnology company headquartered at One Design Center Place,
+  Suite 19-400, Boston, Massachusetts, that built RAPID — Reactive Affinity Probe Interaction
+  Discovery — a next-generation chemoproteomics platform for discovering small-molecule medicines
+  against target classes that conventional screening has struggled to drug, including SLC
+  transporters, transcription factors, signaling scaffold proteins, phosphatases, GPCRs and
+  helicases. RAPID runs in living cells: a proprietary Reactive Affinity Probe library covalently
+  labels druggable pockets on a validated target, and a proprietary detection technology then
+  screens large drug-like compound libraries for binders that displace the probe, yielding allosteric
+  inhibitors, localization modulators and molecular glues without iterative structural biology. Its
+  internal pipeline focuses on phenylketonuria (PKU) — where JNT-517, an oral inhibitor acting at a
+  cryptic allosteric site on the SLC6A19 transporter, reached Phase 1b/2 — and on immune-mediated
+  diseases including targets such as interferon regulatory factor 3 (IRF3), alongside biopharma
+  collaborations that include Roche. Otsuka Pharmaceutical Co., Ltd. completed its acquisition of
+  Jnana on 23 September 2024 for $800 million plus up to $325 million in development and regulatory
+  milestones, making Jnana a direct subsidiary of Otsuka America, Inc.; Otsuka initiated a global
+  Phase 3 trial of repinatrabit in PKU in December 2025. Jnana Therapeutics runs no developer
+  program and publishes no product API, developer portal, API reference or SDK. The only
+  machine-readable surface reachable without credentials is the WordPress REST content API behind
+  www.jnanatx.com, catalogued here.
+image: https://www.jnanatx.com/wp-content/uploads/2022/09/cropped-android-chrome-512x512-1.png
 url: https://raw.githubusercontent.com/api-evangelist/jnana-therapeutics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
-specificationVersion: '0.20'
+x-tier: profiled
+x-tier-reason: enriched
+specificationVersion: '0.23'
 created: '2026-08-23'
 modified: '2026-08-23'
 tags:
 - Company
-apis: []
+- Biotechnology
+- Pharmaceuticals
+- Drug Discovery
+- Chemoproteomics
+- Rare Disease
+- Immunology
+- Life Sciences
+- Clinical Trials
+- content-api
+tags_raw:
+- Company
+- biotechnology
+- pharmaceuticals
+- drug-discovery
+- chemoproteomics
+- rare-disease
+- immunology
+- life-sciences
+- clinical-trials
+- content-api
+apis:
+- aid: jnana-therapeutics:jnana-therapeutics-content-api
+  name: Jnana Therapeutics Content API
+  description: >-
+    The read-only WordPress REST content surface behind www.jnanatx.com — news posts (62), corporate
+    pages (9), media (376), post categories (7), the `team` custom post type (9 profiles) and its
+    `team-department` taxonomy (4 terms), cross-content search, oEmbed 1.0, Yoast SEO head metadata
+    and Genesis theme documents. Verified anonymously reachable on 2026-08-23; an OPTIONS preflight
+    returns `allow: GET`, and every write and administrative route answers 401/403/404 without
+    credentials. Jnana publishes no OpenAPI or API reference for this surface — the OpenAPI here is
+    an API Evangelist derivation of the live route index, and humanURL points at the upstream
+    WordPress REST handbook that defines the wp/v2 contract.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - Content
+  - Posts
+  - Pages
+  - Media
+  - Taxonomy
+  - Team
+  - Search
+  - oEmbed
+  tags_raw:
+  - content
+  - posts
+  - pages
+  - media
+  - taxonomy
+  - team
+  - search
+  - oembed
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-content-openapi.yml
+  - type: Overlay
+    url: overlays/jnana-therapeutics-content-overlay.yaml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/jnana-therapeutics-domain-security.yml
 - type: Website
+  url: https://www.jnanatx.com/
+- type: Platform
+  url: https://www.jnanatx.com/rapid-platform/
+- type: Programs
+  url: https://www.jnanatx.com/programs/
+- type: Team
+  url: https://www.jnanatx.com/team/
+- type: News
+  url: https://www.jnanatx.com/news/
+- type: BlogRSS
+  url: https://www.jnanatx.com/feed/
+- type: Careers
+  url: https://www.jnanatx.com/join-us/
+- type: ContactUs
+  url: https://www.jnanatx.com/contact-us/
+- type: PrivacyPolicy
+  url: https://www.jnanatx.com/privacy-policy/
+- type: TermsOfService
+  url: https://www.jnanatx.com/terms-of-use/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/jnana-therapeutics/
+- type: X
+  url: https://x.com/jnanatx
+- type: ParentCompany
+  url: https://www.otsuka.co.jp/en/
+- type: SecondaryMarket
   url: https://forgeglobal.com/jnana-therapeutics_stock/
+- type: Authentication
+  url: authentication/jnana-therapeutics-authentication.yml
+- type: Conventions
+  url: conventions/jnana-therapeutics-conventions.yml
+- type: Conformance
+  url: conformance/jnana-therapeutics-conformance.yml
+- type: ErrorCatalog
+  url: errors/jnana-therapeutics-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/jnana-therapeutics-lifecycle.yml
+- type: DataModel
+  url: data-model/jnana-therapeutics-data-model.yml
+- type: Overlay
+  url: overlays/jnana-therapeutics-content-overlay.yaml
+- type: Packages
+  url: packages/jnana-therapeutics-packages.yml
+- type: RateLimits
+  url: rate-limits/jnana-therapeutics-rate-limits.yml
+- type: Plans
+  url: plans/jnana-therapeutics-plans-pricing.yml
+- type: LLMsTxt
+  url: llms/jnana-therapeutics-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-23'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1

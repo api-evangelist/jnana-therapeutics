@@ -1,0 +1,30 @@
+generated: '2026-08-23'
+method: generated
+source: >-
+  Grounded in openapi/jnana-therapeutics-content-openapi.yml — every operationId referenced below
+  appears verbatim in that document, and every endpoint was verified anonymously reachable on
+  2026-08-23.
+api: jnana-therapeutics:jnana-therapeutics-content-api
+summary: >-
+  Two packaged agent skills over the only machine-readable surface Jnana Therapeutics serves. Both
+  are read-only, because the surface is read-only. No skill is authored for a flow the company does
+  not actually expose.
+skills:
+- name: jnana-therapeutics-news-monitoring
+  file: jnana-therapeutics-news-monitoring.md
+  description: >-
+    Monitor press releases, media coverage, presentations and insights by category and date window
+    without scraping HTML.
+  operations: [listPosts, getPost, listCategories, searchContent]
+- name: jnana-therapeutics-company-profile
+  file: jnana-therapeutics-company-profile.md
+  description: >-
+    Assemble a primary-source company profile — RAPID platform, programs, leadership and advisory
+    roster — from the pages and the `team` custom post type.
+  operations: [listPages, getPage, listTeamMembers, getTeamMember, listTeamDepartments, getMediaItem]
+not_authored:
+- reason: >-
+    No write, transaction, onboarding, provisioning or notification flow exists on this surface —
+    an OPTIONS preflight on /wp/v2/posts returns `allow: GET`, and every write route answers
+    401/403 anonymously. Authoring a skill for one would teach an agent to call something that does
+    not exist.

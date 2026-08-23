@@ -1,0 +1,73 @@
+overlay: 1.0.0
+info:
+  title: Jnana Therapeutics Content API — API Evangelist enhancements
+  version: 1.0.0
+extends: ../openapi/jnana-therapeutics-content-openapi.yml
+x-api-evangelist:
+  generated: '2026-08-23'
+  method: generated
+  source: >-
+    Captures the enhancements API Evangelist applied when deriving the OpenAPI from the live
+    WordPress route index at https://www.jnanatx.com/wp-json/ on 2026-08-23. The underlying
+    document is itself a derivation — Jnana Therapeutics publishes no OpenAPI — so this overlay
+    records what we added on top of the raw route index rather than what we changed in a
+    provider-published spec.
+actions:
+- target: $.info
+  description: >-
+    Mark the whole document as an API Evangelist derivation of an undocumented surface, so no
+    consumer mistakes it for a provider contract.
+  update:
+    x-api-evangelist-derived: true
+    x-provider-publishes-spec: false
+    x-provider-publishes-docs: false
+- target: $.info
+  description: Record the harvest evidence and the read-only finding.
+  update:
+    x-harvest:
+      harvested: '2026-08-23'
+      route_index: https://www.jnanatx.com/wp-json/
+      routes_in_index: 202
+      namespaces_in_index: 11
+      operations_derived: 25
+      anonymous_read_verified: true
+      write_surface_anonymous: false
+      options_allow_header: GET
+- target: $.servers[0]
+  description: Record the hosting and edge posture observed at harvest time.
+  update:
+    x-infrastructure:
+      origin: WP Engine
+      edge: Cloudflare
+      tls: TLSv1.3
+      hsts: 'max-age=63072000; includeSubDomains; preload'
+      robots: 'x-robots-tag: noindex on every REST response'
+- target: $.paths.*.get
+  description: >-
+    Flag every operation as safe and cacheable — the anonymous surface has no write method at all.
+  update:
+    x-safe: true
+    x-idempotent: true
+    x-cache-control: 'max-age=600, must-revalidate'
+- target: $.paths['/wp/v2/users'].get
+  description: >-
+    Flag the anonymously readable author collection as an exposure worth reviewing. It is
+    WordPress default behaviour, not a Jnana product decision, and it returns account display names
+    and slugs.
+  update:
+    x-exposure-note: >-
+      Anonymously readable author collection returning WordPress account display names and slugs.
+      Recorded because it is served, not because it is documented. See
+      conventions/jnana-therapeutics-conventions.yml observation `users-collection-anonymous`.
+    x-pii: true
+- target: $.paths['/wp/v2/team'].get
+  description: >-
+    Mark the custom post type that carries this deployment's only company-specific content shape.
+  update:
+    x-custom-post-type: team
+    x-taxonomy: team-department
+- target: $.components.schemas.Error
+  description: Record that the error envelope is not RFC 9457.
+  update:
+    x-rfc9457: false
+    x-error-catalog: ../errors/jnana-therapeutics-problem-types.yml
