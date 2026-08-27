@@ -52,42 +52,247 @@ tags_raw:
 - clinical-trials
 - content-api
 apis:
-- aid: jnana-therapeutics:jnana-therapeutics-content-api
-  name: Jnana Therapeutics Content API
-  description: >-
-    The read-only WordPress REST content surface behind www.jnanatx.com — news posts (62), corporate
-    pages (9), media (376), post categories (7), the `team` custom post type (9 profiles) and its
-    `team-department` taxonomy (4 terms), cross-content search, oEmbed 1.0, Yoast SEO head metadata
-    and Genesis theme documents. Verified anonymously reachable on 2026-08-23; an OPTIONS preflight
-    returns `allow: GET`, and every write and administrative route answers 401/403/404 without
-    credentials. Jnana publishes no OpenAPI or API reference for this surface — the OpenAPI here is
-    an API Evangelist derivation of the live route index, and humanURL points at the upstream
-    WordPress REST handbook that defines the wp/v2 contract.
+- aid: jnana-therapeutics:jnana-therapeutics-comments-api
+  name: Jnana Therapeutics Comments API
+  description: Comment collection. Registered and reachable, but empty — no post carries comments.
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://www.jnanatx.com/wp-json
   tags:
-  - Content
-  - Posts
-  - Pages
-  - Media
-  - Taxonomy
-  - Team
-  - Search
-  - oEmbed
-  tags_raw:
-  - content
-  - posts
-  - pages
+  - comments
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-comments-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-discovery-api
+  name: Jnana Therapeutics Discovery API
+  description: Route, type, taxonomy and status discovery documents.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-discovery-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-media-api
+  name: Jnana Therapeutics Media API
+  description: Media library (376 attachments at harvest time).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
   - media
-  - taxonomy
-  - team
-  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-media-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-oembed-api
+  name: Jnana Therapeutics Oembed API
+  description: oEmbed 1.0 provider endpoint for www.jnanatx.com URLs.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
   - oembed
   properties:
   - type: OpenAPI
-    url: openapi/jnana-therapeutics-content-openapi.yml
-  - type: Overlay
-    url: overlays/jnana-therapeutics-content-overlay.yaml
+    url: openapi/jnana-therapeutics-oembed-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-pages-api
+  name: Jnana Therapeutics Pages API
+  description: >-
+    Corporate pages — home, RAPID platform, programs, team, join us, news, contact, privacy policy, terms
+    of use (9 published at harvest time).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - pages
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-pages-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-posts-api
+  name: Jnana Therapeutics Posts API
+  description: >-
+    News archive — press releases, in-the-news coverage, presentations and insights (62 published at harvest
+    time).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - posts
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-posts-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-search-api
+  name: Jnana Therapeutics Search API
+  description: Cross-content search across published objects (73 indexed at harvest time).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-search-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-seo-api
+  name: Jnana Therapeutics Seo API
+  description: Yoast SEO head-metadata document for a given site URL.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - seo
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-seo-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-taxonomy-api
+  name: Jnana Therapeutics Taxonomy API
+  description: >-
+    Post categories (7 registered — press-releases 43, in-the-news 16, presentations 3, insights 2, publications
+    0, blogs 0, videos 0) and team departments (4 registered). The core `post_tag` taxonomy is not exposed
+    — /wp/v2/tags returns rest_no_route.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-taxonomy-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-team-api
+  name: Jnana Therapeutics Team API
+  description: >-
+    `team` custom post type — leadership, board and scientific advisory profiles (9 published at harvest
+    time).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - team
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-team-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-theme-api
+  name: Jnana Therapeutics Theme API
+  description: Genesis theme reading-settings and breadcrumb documents.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - theme
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-theme-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-users-api
+  name: Jnana Therapeutics Users API
+  description: >-
+    Author collection (4 records). Anonymously readable, exposing WordPress author display names and slugs.
+    Flagged in conventions/ as an exposure worth reviewing, not a documented product.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-users-api-openapi.yml
   - type: Authentication
     url: authentication/jnana-therapeutics-authentication.yml
   - type: Conventions
