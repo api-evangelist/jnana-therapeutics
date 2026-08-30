@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: Jnana Therapeutics Content Discovery API
+  version: wp/v2
+  summary: Anonymously readable WordPress REST content API behind www.jnanatx.com.
+  description: The read-only content surface Jnana Therapeutics exposes at https://www.jnanatx.com/wp-json. Jnana Therapeutics is a Boston-based biotechnology company that built the RAPID (Reactive Affinity Probe Interaction Discovery) next-generation chemoproteomics platform for small-molecule drug discovery, and has been a direct subsidiary of Otsuka America, Inc. since Otsuka Pharmaceutical completed its acquisition of the company on 23 September 2024. It runs no developer program and markets no product API. This document is an API Evangelist derivation of the WordPress `wp/v2`, `oembed/1.0`, `genesis/v1` and `yoast/v1` route index the site publishes at /wp-json/, restricted to the operations that were verified to return data anonymously on 2026-08-23. Write operations and the administrative surface — `/wp/v2/settings`, `/wp/v2/menu-items`, `/wp/v2/block-types`, `/wp/v2/templates`, `/wp/v2/navigation`, the `wp-abilities/v1`, `wp-site-health/v1`, `wp-block-editor/v1`, `contact-form-7/v1`, `wpe/cache-plugin/v1` and `wpe_sign_on_plugin/v1` namespaces, and `/oembed/1.0/proxy` — all answered 401/403/404 anonymously and are deliberately excluded. See x-api-evangelist-provenance.
+  contact:
+    name: Jnana Therapeutics
+    url: https://www.jnanatx.com/contact-us/
+    email: info@jnanatx.com
+  x-api-evangelist-provenance: 'Derived by the API Evangelist enrichment pipeline from the live WordPress REST route index at https://www.jnanatx.com/wp-json/ (202 routes across 11 namespaces) and verified against live anonymous responses on 2026-08-23. Every query parameter below appears verbatim in that route index `args` block for the endpoint it is attached to, and every collection count in a description was read from the `X-WP-Total` response header on that date. Jnana Therapeutics publishes no OpenAPI, no developer documentation and no API reference for this surface; the humanURL in apis.yml points at the upstream WordPress REST handbook that defines the wp/v2 contract. The deployment is served by WP Engine behind Cloudflare, responses carry `x-robots-tag: noindex` and `cache-control: max-age=600, must-revalidate`, and an OPTIONS preflight on /wp/v2/posts returns `allow: GET` — confirming the surface is read-only to an anonymous caller. Nothing here was obtained with credentials.'
+servers:
+- url: https://www.jnanatx.com/wp-json
+  description: Production content API
+tags:
+- name: discovery
+  description: Route, type, taxonomy and status discovery documents.
+paths:
+  /:
+    get:
+      tags:
+      - discovery
+      operationId: getApiIndex
+      summary: Get the REST API index
+      description: Site identity plus the full route index — 202 routes across 11 namespaces (oembed/1.0, wpe/cache-plugin/v1, wpe_sign_on_plugin/v1, contact-form-7/v1, yoast/v1, genesis-custom-blocks, genesis/v1, wp/v2, wp-site-health/v1, wp-block-editor/v1, wp-abilities/v1).
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The API index document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiIndex'
+  /wp/v2/types:
+    get:
+      tags:
+      - discovery
+      operationId: listTypes
+      summary: List registered post types
+      description: 12 types registered — post, page, attachment, nav_menu_item, wp_block, wp_template, wp_template_part, wp_global_styles, wp_navigation, wp_font_family, wp_font_face and the custom `team` type.
+      parameters:
+      - $ref: '#/components/parameters/Context'
+      responses:
+        '200':
+          description: A map of post types keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/PostType'
+  /wp/v2/types/{type}:
+    get:
+      tags:
+      - discovery
+      operationId: getType
+      summary: Get a single post type
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Context'
+      responses:
+        '200':
+          description: The post type document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostType'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wp/v2/taxonomies:
+    get:
+      tags:
+      - discovery
+      operationId: listTaxonomies
+      summary: List registered taxonomies
+      description: 4 taxonomies registered — category, nav_menu, wp_pattern_category and the custom team-department.
+      parameters:
+      - $ref: '#/components/parameters/Context'
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A map of taxonomies keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+  /wp/v2/statuses:
+    get:
+      tags:
+      - discovery
+      operationId: listStatuses
+      summary: List registered post statuses
+      parameters:
+      - $ref: '#/components/parameters/Context'
+      responses:
+        '200':
+          description: A map of post statuses keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+components:
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope. Not RFC 9457 — see errors/jnana-therapeutics-problem-types.yml.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error slug.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+    PostType:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        hierarchical:
+          type: boolean
+        has_archive:
+          type: boolean
+        rest_base:
+          type: string
+        rest_namespace:
+          type: string
+        taxonomies:
+          type: array
+          items:
+            type: string
+        _links:
+          type: object
+    ApiIndex:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        home:
+          type: string
+          format: uri
+        gmt_offset:
+          type: number
+        timezone_string:
+          type: string
+        namespaces:
+          type: array
+          items:
+            type: string
+        authentication:
+          type: object
+        routes:
+          type: object
+        site_icon_url:
+          type: string
+          format: uri
+  parameters:
+    Context:
+      name: context
+      in: query
+      required: false
+      description: Scope under which the request is made; determines fields present in the response. `edit` requires authentication.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        - edit
+        default: view
+  responses:
+    NotFound:
+      description: No route matched, or the object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            noRoute:
+              value:
+                code: rest_no_route
+                message: No route was found matching the URL and request method.
+                data:
+                  status: 404

@@ -1,0 +1,245 @@
+openapi: 3.2.0
+info:
+  title: Jnana Therapeutics Content Pages API
+  version: wp/v2
+  summary: Anonymously readable WordPress REST content API behind www.jnanatx.com.
+  description: The read-only content surface Jnana Therapeutics exposes at https://www.jnanatx.com/wp-json. Jnana Therapeutics is a Boston-based biotechnology company that built the RAPID (Reactive Affinity Probe Interaction Discovery) next-generation chemoproteomics platform for small-molecule drug discovery, and has been a direct subsidiary of Otsuka America, Inc. since Otsuka Pharmaceutical completed its acquisition of the company on 23 September 2024. It runs no developer program and markets no product API. This document is an API Evangelist derivation of the WordPress `wp/v2`, `oembed/1.0`, `genesis/v1` and `yoast/v1` route index the site publishes at /wp-json/, restricted to the operations that were verified to return data anonymously on 2026-08-23. Write operations and the administrative surface — `/wp/v2/settings`, `/wp/v2/menu-items`, `/wp/v2/block-types`, `/wp/v2/templates`, `/wp/v2/navigation`, the `wp-abilities/v1`, `wp-site-health/v1`, `wp-block-editor/v1`, `contact-form-7/v1`, `wpe/cache-plugin/v1` and `wpe_sign_on_plugin/v1` namespaces, and `/oembed/1.0/proxy` — all answered 401/403/404 anonymously and are deliberately excluded. See x-api-evangelist-provenance.
+  contact:
+    name: Jnana Therapeutics
+    url: https://www.jnanatx.com/contact-us/
+    email: info@jnanatx.com
+  x-api-evangelist-provenance: 'Derived by the API Evangelist enrichment pipeline from the live WordPress REST route index at https://www.jnanatx.com/wp-json/ (202 routes across 11 namespaces) and verified against live anonymous responses on 2026-08-23. Every query parameter below appears verbatim in that route index `args` block for the endpoint it is attached to, and every collection count in a description was read from the `X-WP-Total` response header on that date. Jnana Therapeutics publishes no OpenAPI, no developer documentation and no API reference for this surface; the humanURL in apis.yml points at the upstream WordPress REST handbook that defines the wp/v2 contract. The deployment is served by WP Engine behind Cloudflare, responses carry `x-robots-tag: noindex` and `cache-control: max-age=600, must-revalidate`, and an OPTIONS preflight on /wp/v2/posts returns `allow: GET` — confirming the surface is read-only to an anonymous caller. Nothing here was obtained with credentials.'
+servers:
+- url: https://www.jnanatx.com/wp-json
+  description: Production content API
+tags:
+- name: pages
+  description: Corporate pages — home, RAPID platform, programs, team, join us, news, contact, privacy policy, terms of use (9 published at harvest time).
+paths:
+  /wp/v2/pages:
+    get:
+      tags:
+      - pages
+      operationId: listPages
+      summary: List corporate pages
+      description: 9 published at harvest time — home, rapid-platform, programs, team, join-us, news, contact-us, privacy-policy, terms-of-use.
+      parameters:
+      - $ref: '#/components/parameters/Context'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Order'
+      - $ref: '#/components/parameters/Slug'
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: menu_order
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A page of pages.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+            X-WP-TotalPages:
+              $ref: '#/components/headers/XWPTotalPages'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Page'
+        '400':
+          $ref: '#/components/responses/InvalidParam'
+  /wp/v2/pages/{id}:
+    get:
+      tags:
+      - pages
+      operationId: getPage
+      summary: Get a single corporate page
+      parameters:
+      - $ref: '#/components/parameters/IdPath'
+      - $ref: '#/components/parameters/Context'
+      responses:
+        '200':
+          description: The page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope. Not RFC 9457 — see errors/jnana-therapeutics-problem-types.yml.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error slug.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+    RenderedText:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
+    Page:
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        slug:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+          const: page
+        link:
+          type: string
+          format: uri
+        title:
+          $ref: '#/components/schemas/RenderedText'
+        content:
+          $ref: '#/components/schemas/RenderedText'
+        excerpt:
+          $ref: '#/components/schemas/RenderedText'
+        author:
+          type: integer
+        parent:
+          type: integer
+          description: Parent page id.
+        menu_order:
+          type: integer
+        featured_media:
+          type: integer
+        _links:
+          type: object
+  responses:
+    InvalidParam:
+      description: A supplied parameter failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            invalidParam:
+              value:
+                code: rest_invalid_param
+                message: 'Invalid parameter(s): per_page'
+                data:
+                  status: 400
+    NotFound:
+      description: No route matched, or the object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            noRoute:
+              value:
+                code: rest_no_route
+                message: No route was found matching the URL and request method.
+                data:
+                  status: 404
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+    PerPage:
+      name: per_page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Order:
+      name: order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+    Search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+    Context:
+      name: context
+      in: query
+      required: false
+      description: Scope under which the request is made; determines fields present in the response. `edit` requires authentication.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        - edit
+        default: view
+  headers:
+    XWPTotalPages:
+      description: Total number of pages available at the current per_page.
+      schema:
+        type: integer
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer

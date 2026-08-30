@@ -1,0 +1,430 @@
+openapi: 3.2.0
+info:
+  title: Jnana Therapeutics Content Posts API
+  version: wp/v2
+  summary: Anonymously readable WordPress REST content API behind www.jnanatx.com.
+  description: The read-only content surface Jnana Therapeutics exposes at https://www.jnanatx.com/wp-json. Jnana Therapeutics is a Boston-based biotechnology company that built the RAPID (Reactive Affinity Probe Interaction Discovery) next-generation chemoproteomics platform for small-molecule drug discovery, and has been a direct subsidiary of Otsuka America, Inc. since Otsuka Pharmaceutical completed its acquisition of the company on 23 September 2024. It runs no developer program and markets no product API. This document is an API Evangelist derivation of the WordPress `wp/v2`, `oembed/1.0`, `genesis/v1` and `yoast/v1` route index the site publishes at /wp-json/, restricted to the operations that were verified to return data anonymously on 2026-08-23. Write operations and the administrative surface — `/wp/v2/settings`, `/wp/v2/menu-items`, `/wp/v2/block-types`, `/wp/v2/templates`, `/wp/v2/navigation`, the `wp-abilities/v1`, `wp-site-health/v1`, `wp-block-editor/v1`, `contact-form-7/v1`, `wpe/cache-plugin/v1` and `wpe_sign_on_plugin/v1` namespaces, and `/oembed/1.0/proxy` — all answered 401/403/404 anonymously and are deliberately excluded. See x-api-evangelist-provenance.
+  contact:
+    name: Jnana Therapeutics
+    url: https://www.jnanatx.com/contact-us/
+    email: info@jnanatx.com
+  x-api-evangelist-provenance: 'Derived by the API Evangelist enrichment pipeline from the live WordPress REST route index at https://www.jnanatx.com/wp-json/ (202 routes across 11 namespaces) and verified against live anonymous responses on 2026-08-23. Every query parameter below appears verbatim in that route index `args` block for the endpoint it is attached to, and every collection count in a description was read from the `X-WP-Total` response header on that date. Jnana Therapeutics publishes no OpenAPI, no developer documentation and no API reference for this surface; the humanURL in apis.yml points at the upstream WordPress REST handbook that defines the wp/v2 contract. The deployment is served by WP Engine behind Cloudflare, responses carry `x-robots-tag: noindex` and `cache-control: max-age=600, must-revalidate`, and an OPTIONS preflight on /wp/v2/posts returns `allow: GET` — confirming the surface is read-only to an anonymous caller. Nothing here was obtained with credentials.'
+servers:
+- url: https://www.jnanatx.com/wp-json
+  description: Production content API
+tags:
+- name: posts
+  description: News archive — press releases, in-the-news coverage, presentations and insights (62 published at harvest time).
+paths:
+  /wp/v2/posts:
+    get:
+      tags:
+      - posts
+      operationId: listPosts
+      summary: List news posts
+      description: Press releases, in-the-news coverage, presentations and insights. 62 published at harvest time.
+      parameters:
+      - $ref: '#/components/parameters/Context'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/After'
+      - $ref: '#/components/parameters/Before'
+      - $ref: '#/components/parameters/ModifiedAfter'
+      - $ref: '#/components/parameters/ModifiedBefore'
+      - $ref: '#/components/parameters/Exclude'
+      - $ref: '#/components/parameters/Include'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Order'
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - $ref: '#/components/parameters/Slug'
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: categories
+        in: query
+        required: false
+        description: Limit to posts in these category IDs (5 press-releases, 6 in-the-news, 7 insights, 12 publications, 13 presentations, 14 blogs, 15 videos).
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: categories_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: sticky
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: ignore_sticky
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: format
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: tax_relation
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+      - name: status
+        in: query
+        required: false
+        description: Anonymous callers may only request `publish`; any other value returns 401.
+        schema:
+          type: array
+          items:
+            type: string
+          default:
+          - publish
+      responses:
+        '200':
+          description: A page of posts. `X-WP-Total` and `X-WP-TotalPages` carry the collection size; `Link` carries rel=next/prev.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+            X-WP-TotalPages:
+              $ref: '#/components/headers/XWPTotalPages'
+            Link:
+              $ref: '#/components/headers/LinkPagination'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '400':
+          $ref: '#/components/responses/InvalidParam'
+        '401':
+          $ref: '#/components/responses/Forbidden'
+  /wp/v2/posts/{id}:
+    get:
+      tags:
+      - posts
+      operationId: getPost
+      summary: Get a single news post
+      parameters:
+      - $ref: '#/components/parameters/IdPath'
+      - $ref: '#/components/parameters/Context'
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The post.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  headers:
+    XWPTotalPages:
+      description: Total number of pages available at the current per_page.
+      schema:
+        type: integer
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+    LinkPagination:
+      description: RFC 8288 Link header carrying rel="next" and rel="prev".
+      schema:
+        type: string
+  parameters:
+    Slug:
+      name: slug
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+    PerPage:
+      name: per_page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: integer
+    After:
+      name: after
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    Include:
+      name: include
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+    Before:
+      name: before
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    ModifiedAfter:
+      name: modified_after
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    Context:
+      name: context
+      in: query
+      required: false
+      description: Scope under which the request is made; determines fields present in the response. `edit` requires authentication.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        - edit
+        default: view
+    ModifiedBefore:
+      name: modified_before
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    Exclude:
+      name: exclude
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+    IdPath:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+    Search:
+      name: search
+      in: query
+      required: false
+      schema:
+        type: string
+    Order:
+      name: order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope. Not RFC 9457 — see errors/jnana-therapeutics-problem-types.yml.
+      required:
+      - code
+      - message
+      - data
+      properties:
+        code:
+          type: string
+          description: Machine-readable error slug.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: string
+          format: date-time
+        date_gmt:
+          type: string
+          format: date-time
+        guid:
+          $ref: '#/components/schemas/RenderedText'
+        modified:
+          type: string
+          format: date-time
+        modified_gmt:
+          type: string
+          format: date-time
+        slug:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+          const: post
+        link:
+          type: string
+          format: uri
+        title:
+          $ref: '#/components/schemas/RenderedText'
+        content:
+          $ref: '#/components/schemas/RenderedText'
+        excerpt:
+          $ref: '#/components/schemas/RenderedText'
+        author:
+          type: integer
+          description: User id — see /wp/v2/users/{id}.
+        featured_media:
+          type: integer
+          description: Attachment id — see /wp/v2/media/{id}.
+        categories:
+          type: array
+          items:
+            type: integer
+          description: Category term ids — see /wp/v2/categories/{id}.
+        yoast_head:
+          type: string
+        yoast_head_json:
+          type: object
+        _links:
+          type: object
+    RenderedText:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
+  responses:
+    NotFound:
+      description: No route matched, or the object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            noRoute:
+              value:
+                code: rest_no_route
+                message: No route was found matching the URL and request method.
+                data:
+                  status: 404
+    InvalidParam:
+      description: A supplied parameter failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            invalidParam:
+              value:
+                code: rest_invalid_param
+                message: 'Invalid parameter(s): per_page'
+                data:
+                  status: 400
+    Forbidden:
+      description: The caller is not permitted to perform this request anonymously.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            forbidden:
+              value:
+                code: rest_forbidden
+                message: Sorry, you are not allowed to do that.
+                data:
+                  status: 401
