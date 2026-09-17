@@ -144,28 +144,6 @@ apis:
     url: data-model/jnana-therapeutics-data-model.yml
   - type: RateLimits
     url: rate-limits/jnana-therapeutics-rate-limits.yml
-- aid: jnana-therapeutics:jnana-therapeutics-oembed-api
-  name: Jnana Therapeutics Oembed API
-  description: oEmbed 1.0 provider endpoint for www.jnanatx.com URLs.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://www.jnanatx.com/wp-json
-  tags:
-  - oEmbed
-  tags_raw:
-  - oembed
-  properties:
-  - type: OpenAPI
-    url: openapi/jnana-therapeutics-oembed-api-openapi.yml
-  - type: Authentication
-    url: authentication/jnana-therapeutics-authentication.yml
-  - type: Conventions
-    url: conventions/jnana-therapeutics-conventions.yml
-  - type: ErrorCatalog
-    url: errors/jnana-therapeutics-problem-types.yml
-  - type: DataModel
-    url: data-model/jnana-therapeutics-data-model.yml
-  - type: RateLimits
-    url: rate-limits/jnana-therapeutics-rate-limits.yml
 - aid: jnana-therapeutics:jnana-therapeutics-pages-api
   name: Jnana Therapeutics Pages API
   description: >-
@@ -343,6 +321,26 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/jnana-therapeutics-users-api-openapi.yml
+  - type: Authentication
+    url: authentication/jnana-therapeutics-authentication.yml
+  - type: Conventions
+    url: conventions/jnana-therapeutics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/jnana-therapeutics-problem-types.yml
+  - type: DataModel
+    url: data-model/jnana-therapeutics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/jnana-therapeutics-rate-limits.yml
+- aid: jnana-therapeutics:jnana-therapeutics-o-embed-api
+  name: Jnana Therapeutics o Embed API
+  description: oEmbed 1.0 provider endpoint for www.jnanatx.com URLs.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://www.jnanatx.com/wp-json
+  tags:
+  - o Embed
+  properties:
+  - type: OpenAPI
+    url: openapi/jnana-therapeutics-o-embed-api-openapi.yml
   - type: Authentication
     url: authentication/jnana-therapeutics-authentication.yml
   - type: Conventions
