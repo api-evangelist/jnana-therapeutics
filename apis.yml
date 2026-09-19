@@ -337,6 +337,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://www.jnanatx.com/wp-json
   tags:
+  - oEmbed
+  tags_raw:
   - o Embed
   properties:
   - type: OpenAPI
