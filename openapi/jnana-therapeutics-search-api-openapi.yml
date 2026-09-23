@@ -3,7 +3,7 @@ info:
   title: Jnana Therapeutics Content Search API
   version: wp/v2
   summary: Anonymously readable WordPress REST content API behind www.jnanatx.com.
-  description: The read-only content surface Jnana Therapeutics exposes at https://www.jnanatx.com/wp-json. Jnana Therapeutics is a Boston-based biotechnology company that built the RAPID (Reactive Affinity Probe Interaction Discovery) next-generation chemoproteomics platform for small-molecule drug discovery, and has been a direct subsidiary of Otsuka America, Inc. since Otsuka Pharmaceutical completed its acquisition of the company on 23 September 2024. It runs no developer program and markets no product API. This document is an API Evangelist derivation of the WordPress `wp/v2`, `oembed/1.0`, `genesis/v1` and `yoast/v1` route index the site publishes at /wp-json/, restricted to the operations that were verified to return data anonymously on 2026-08-23. Write operations and the administrative surface — `/wp/v2/settings`, `/wp/v2/menu-items`, `/wp/v2/block-types`, `/wp/v2/templates`, `/wp/v2/navigation`, the `wp-abilities/v1`, `wp-site-health/v1`, `wp-block-editor/v1`, `contact-form-7/v1`, `wpe/cache-plugin/v1` and `wpe_sign_on_plugin/v1` namespaces, and `/oembed/1.0/proxy` — all answered 401/403/404 anonymously and are deliberately excluded. See x-api-evangelist-provenance.
+  description: The read-only content surface Jnana Therapeutics exposes at https://www.jnanatx.com/wp-json.
   contact:
     name: Jnana Therapeutics
     url: https://www.jnanatx.com/contact-us/
@@ -13,13 +13,13 @@ servers:
 - url: https://www.jnanatx.com/wp-json
   description: Production content API
 tags:
-- name: search
+- name: Search
   description: Cross-content search across published objects (73 indexed at harvest time).
 paths:
   /wp/v2/search:
     get:
       tags:
-      - search
+      - Search
       operationId: searchContent
       summary: Search published content
       description: Cross-content search across published objects. 73 objects indexed at harvest time.
@@ -65,6 +65,22 @@ paths:
           $ref: '#/components/responses/InvalidParam'
 components:
   schemas:
+    SearchResult:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+        subtype:
+          type: string
+        _links:
+          type: object
     Error:
       type: object
       description: The WordPress REST error envelope. Not RFC 9457 — see errors/jnana-therapeutics-problem-types.yml.
@@ -88,31 +104,7 @@ components:
               type: object
             details:
               type: object
-    SearchResult:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-        subtype:
-          type: string
-        _links:
-          type: object
   parameters:
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
     PerPage:
       name: per_page
       in: query
@@ -128,6 +120,14 @@ components:
       required: false
       schema:
         type: string
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
     Context:
       name: context
       in: query
@@ -140,15 +140,6 @@ components:
         - embed
         - edit
         default: view
-  headers:
-    XWPTotalPages:
-      description: Total number of pages available at the current per_page.
-      schema:
-        type: integer
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
   responses:
     InvalidParam:
       description: A supplied parameter failed validation.
@@ -163,3 +154,12 @@ components:
                 message: 'Invalid parameter(s): per_page'
                 data:
                   status: 400
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+    XWPTotalPages:
+      description: Total number of pages available at the current per_page.
+      schema:
+        type: integer

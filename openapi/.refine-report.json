@@ -1,0 +1,45 @@
+{
+  "provider": "jnana-therapeutics",
+  "sources": [
+    "_original/jnana-therapeutics-content-openapi.yml"
+  ],
+  "outputs": [
+    "jnana-therapeutics-comments-api-openapi.yml",
+    "jnana-therapeutics-discovery-api-openapi.yml",
+    "jnana-therapeutics-media-api-openapi.yml",
+    "jnana-therapeutics-oembed-api-openapi.yml",
+    "jnana-therapeutics-pages-api-openapi.yml",
+    "jnana-therapeutics-posts-api-openapi.yml",
+    "jnana-therapeutics-search-api-openapi.yml",
+    "jnana-therapeutics-seo-api-openapi.yml",
+    "jnana-therapeutics-taxonomy-api-openapi.yml",
+    "jnana-therapeutics-team-api-openapi.yml",
+    "jnana-therapeutics-theme-api-openapi.yml",
+    "jnana-therapeutics-users-api-openapi.yml"
+  ],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "jnana-therapeutics-content-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: jnana-therapeutics-o-embed-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 12 total)"
+  ],
+  "skipped": [
+    "jnana-therapeutics-comments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-o-embed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-seo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-team-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-theme-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "jnana-therapeutics-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
