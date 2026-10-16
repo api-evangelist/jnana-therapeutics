@@ -2,11 +2,11 @@
   "repo": "jnana-therapeutics",
   "feeds": [
     {
-      "source": "https://www.jnanatx.com/news/",
-      "feed_url": "https://www.jnanatx.com/news/feed/",
+      "source": "https://www.jnanatx.com/feed/",
+      "feed_url": "https://www.jnanatx.com/feed/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "feed"
     },
     {
       "source": "https://www.jnanatx.com/news/feed/",
@@ -14,15 +14,8 @@
       "title": "",
       "saved": 0,
       "method": "feed"
-    },
-    {
-      "source": "https://www.jnanatx.com/feed/",
-      "feed_url": "https://www.jnanatx.com/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
     }
   ],
-  "post_count": 12,
-  "fetched": "2026-10-03T12:30:02Z"
+  "post_count": 13,
+  "fetched": "2026-10-10T13:15:00Z"
 }
