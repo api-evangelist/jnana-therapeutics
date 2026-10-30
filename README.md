@@ -64,18 +64,104 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Jnana Therapeutics Inc. is a Boston-based biotechnology company built around RAPID (Reactive
-Affinity Probe Interaction Discovery), a next-generation chemoproteomics platform for discovering
-small-molecule medicines against target classes conventional screening has struggled to drug. Its
-programs focus on phenylketonuria (PKU) and immune-mediated diseases. Otsuka Pharmaceutical
-completed its acquisition of Jnana on 23 September 2024, making it a direct subsidiary of Otsuka
-America, Inc.
+Jnana Therapeutics Inc. is a biotechnology company headquartered at One Design Center Place, Suite 19-400, Boston, Massachusetts, that built RAPID — Reactive Affinity Probe Interaction Discovery — a next-generation chemoproteomics platform for discovering small-molecule medicines against target classes that conventional screening has struggled to drug, including SLC transporters, transcription factors, signaling scaffold proteins, phosphatases, GPCRs and helicases. RAPID runs in living cells: a proprietary Reactive Affinity Probe library covalently labels druggable pockets on a validated target, and a proprietary detection technology then screens large drug-like compound libraries for binders that displace the probe, yielding allosteric inhibitors, localization modulators and molecular glues without iterative structural biology. Its internal pipeline focuses on phenylketonuria (PKU) — where JNT-517, an oral inhibitor acting at a cryptic allosteric site on the SLC6A19 transporter, reached Phase 1b/2 — and on immune-mediated diseases including targets such as interferon regulatory factor 3 (IRF3), alongside biopharma collaborations that include Roche. Otsuka Pharmaceutical Co., Ltd. completed its acquisition of Jnana on 23 September 2024 for $800 million plus up to $325 million in development and regulatory milestones, making Jnana a direct subsidiary of Otsuka America, Inc.; Otsuka initiated a global Phase 3 trial of repinatrabit in PKU in December 2025. Jnana Therapeutics runs no developer program and publishes no product API, developer portal, API reference or SDK. The only machine-readable surface reachable without credentials is the WordPress REST content API behind www.jnanatx.com, catalogued here.
 
-Jnana Therapeutics runs no developer program and publishes no product API, developer portal, API
-reference or SDK — `api.jnanatx.com`, `docs.jnanatx.com` and `developer.jnanatx.com` do not resolve.
-The only machine-readable surface reachable without credentials is the read-only WordPress REST
-content API behind `www.jnanatx.com`, which is what this profile catalogues. The OpenAPI here is an
-API Evangelist derivation of the live route index, not a document Jnana publishes.
+**Areas:** Company · Biotechnology · Pharmaceuticals · Drug Discovery · chemoproteomics · Rare Disease · Immunology · Life Sciences · Clinical Trials · content-api
 
-- Website: https://www.jnanatx.com/
-- Secondary market: https://forgeglobal.com/jnana-therapeutics_stock/
+## Jnana Therapeutics on APIs.io
+
+Everything profiled for Jnana Therapeutics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/jnana-therapeutics/](https://apis.io/providers/jnana-therapeutics/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Jnana Therapeutics Website (WordPress REST)](https://apis.io/apis/jnana-therapeutics/jnanatx-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Jnana Therapeutics website at www.jnanatx.com: the route index of the site's content management system,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [jnana-therapeutics-mcp.yml](https://apis.io/servers/jnana-therapeutics/jnana-therapeutics-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Jnana Therapeutics Authentication](https://apis.io/security/jnana-therapeutics/jnana-therapeutics-authentication/)
+- [Jnana Therapeutics Domain Security](https://apis.io/security/jnana-therapeutics/jnana-therapeutics-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Jnana Therapeutics Plans Pricing](https://apis.io/plans/jnana-therapeutics/jnana-therapeutics-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Jnana Therapeutics Rate Limits](https://apis.io/rate-limits/jnana-therapeutics/jnana-therapeutics-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.jnanatx.com/)
+- [Terms of service](https://www.jnanatx.com/terms-of-use/)
+- [Privacy policy](https://www.jnanatx.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 17.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 65.2 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 23.2 |
+| Access clarity | 21.1 |
+
+**Agent readiness 6.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.5** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/jnana-therapeutics/](https://apis.io/providers/jnana-therapeutics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Jnana Therapeutics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/jnana-therapeutics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
